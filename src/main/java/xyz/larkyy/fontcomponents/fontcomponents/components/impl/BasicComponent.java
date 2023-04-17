@@ -48,5 +48,8 @@ public class BasicComponent extends FontComponent {
             this.text = text;
             return this;
         }
+        public BasicComponent build() {
+            return new BasicComponent(text,font,width);
+        }
     }
 }
