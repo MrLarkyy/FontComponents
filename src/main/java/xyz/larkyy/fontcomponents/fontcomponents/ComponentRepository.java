@@ -30,7 +30,43 @@ public class ComponentRepository {
         return offsetComponents.get(offset);
     }
 
+    public String generateNegativeOffset(int offset, HolderWidth width) {
+        if (offsetComponents.isEmpty()) {
+            return "";
+        }
+        Integer lowest = offsetComponents.firstKey();
+        if (lowest == null) {
+            return "";
+        }
+        if (lowest >= 0) {
+            return "";
+        }
+        OffsetComponent offsetComponent = getOffset(offset);
+        if (offsetComponent !=null) {
+            return offsetComponent.generate(null,width);
+        }
+        int alreadyGenerated = 0;
+        StringBuilder stringBuilder = new StringBuilder();
+        while(alreadyGenerated > offset) {
+            stringBuilder.append(",");
+            OffsetComponent nearestOffset;
+
+            offsetComponent = getOffset(offset-alreadyGenerated);
+            if (offsetComponent !=null) {
+                nearestOffset = offsetComponent;
+            } else {
+                nearestOffset = getNearestOffset(offset-alreadyGenerated);
+            }
+            alreadyGenerated += nearestOffset.getOffset();
+            stringBuilder.append(nearestOffset.generate(null,width));
+        }
+        return stringBuilder.toString();
+    }
+
     public String generateOffset(int offset, HolderWidth width) {
+        if (offset < 0) {
+            return generateNegativeOffset(offset,width);
+        }
         if (offsetComponents.isEmpty()) {
             return "";
         }

@@ -8,6 +8,6 @@ import xyz.larkyy.fontcomponents.fontcomponents.components.HolderWidth;
 public class CenterComponent extends FontComponent {
     @Override
     public String generate(Player player, HolderWidth width) {
-        return FontComponents.getInstance().getComponentRepository().generateOffset(width.getWidth()/2,width);
+        return FontComponents.getInstance().getComponentRepository().generateOffset(-(width.getWidth()/2),width);
     }
 }

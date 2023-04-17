@@ -34,7 +34,7 @@ public class ConditionalComponent extends FontComponent {
             width.add(this.width);
             if (centered) {
                 string += FontComponents.getInstance().getComponentRepository()
-                        .generateOffset(width.getWidth()/2,width);
+                        .generateOffset(-(width.getWidth()/2),width);
                 string += ",";
             }
             return string+Utils.toJson(text,font);

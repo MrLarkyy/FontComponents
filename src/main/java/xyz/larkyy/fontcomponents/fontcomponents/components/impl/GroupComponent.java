@@ -35,7 +35,7 @@ public class GroupComponent extends FontComponent {
         }
         if (centered) {
             FontComponents.getInstance().getComponentRepository()
-                    .generateOffset((width.getWidth())/2,width);
+                    .generateOffset(-(width.getWidth()/2),width);
         }
 
         return stringBuilder.toString();
