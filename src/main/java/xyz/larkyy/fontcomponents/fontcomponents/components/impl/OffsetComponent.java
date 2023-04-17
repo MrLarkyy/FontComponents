@@ -1,6 +1,7 @@
 package xyz.larkyy.fontcomponents.fontcomponents.components.impl;
 
 import org.bukkit.entity.Player;
+import xyz.larkyy.fontcomponents.fontcomponents.Utils;
 import xyz.larkyy.fontcomponents.fontcomponents.components.FontComponent;
 import xyz.larkyy.fontcomponents.fontcomponents.components.HolderWidth;
 
@@ -8,9 +9,11 @@ public class OffsetComponent extends FontComponent {
 
     private final int offset;
     private final String text;
+    private final String font;
 
-    public OffsetComponent(String text, int offset) {
+    public OffsetComponent(String text, String font, int offset) {
         this.offset = offset;
+        this.font = font;
         this.text = text;
     }
 
@@ -25,7 +28,7 @@ public class OffsetComponent extends FontComponent {
     @Override
     public String generate(Player player, HolderWidth width) {
         width.add(offset);
-        return null;
+        return Utils.toJson(text,font);
     }
 
     public static Builder builder() {
@@ -36,9 +39,15 @@ public class OffsetComponent extends FontComponent {
 
         private int offset;
         private String text;
+        private String font;
 
         private Builder() {
 
+        }
+
+        public Builder setFont(String font) {
+            this.font = font;
+            return this;
         }
 
         public Builder setOffset(int offset) {
@@ -50,7 +59,7 @@ public class OffsetComponent extends FontComponent {
             return this;
         }
         public OffsetComponent build() {
-            return new OffsetComponent(text,offset);
+            return new OffsetComponent(text,font,offset);
         }
     }
 }
