@@ -97,7 +97,6 @@ public class ComponentRepository {
         if (key == null) {
             key = offsetComponents.firstKey();
         }
-        Bukkit.broadcastMessage("Nearest to "+offset+" is "+getOffset(key).getOffset());
         return getOffset(key);
     }
 
