@@ -1,6 +1,7 @@
 package xyz.larkyy.fontcomponents.fontcomponents.components.impl;
 
 import org.bukkit.entity.Player;
+import xyz.larkyy.fontcomponents.fontcomponents.FontComponents;
 import xyz.larkyy.fontcomponents.fontcomponents.Utils;
 import xyz.larkyy.fontcomponents.fontcomponents.components.FontComponent;
 import xyz.larkyy.fontcomponents.fontcomponents.components.HolderWidth;
@@ -12,18 +13,27 @@ public class ConditionalComponent extends FontComponent {
     private final String text;
     private final String font;
     private final int width;
+    private boolean centered;
     private final Predicate<Player> predicate;
 
-    public ConditionalComponent(String text, String font, int width, Predicate<Player> predicate) {
+    public ConditionalComponent(String text, String font, int width, Predicate<Player> predicate, boolean centered) {
         this.text = text;
         this.font = font;
         this.width = width;
         this.predicate = predicate;
+        this.centered = centered;
+    }
+
+    public void setCentered(boolean centered) {
+        this.centered = centered;
     }
 
     public String generate(Player player, HolderWidth width) {
-
         if (predicate.test(player)) {
+            if (centered) {
+                FontComponents.getInstance().getComponentRepository()
+                        .generateOffset((width.getWidth()+this.width)/2,width);
+            }
             width.add(this.width);
             return Utils.toJson(text,font);
         }
@@ -38,9 +48,15 @@ public class ConditionalComponent extends FontComponent {
         private String text;
         private String font;
         private int width;
+        private boolean centered = false;
         private Predicate<Player> predicate;
 
         private Builder() {
+        }
+
+        public Builder setCentered(boolean centered) {
+            this.centered = centered;
+            return this;
         }
 
         public Builder setPredicate(Predicate<Player> predicate) {
@@ -60,7 +76,7 @@ public class ConditionalComponent extends FontComponent {
             return this;
         }
         public ConditionalComponent build() {
-            return new ConditionalComponent(text,font,width,predicate);
+            return new ConditionalComponent(text,font,width,predicate,centered);
         }
     }
 }

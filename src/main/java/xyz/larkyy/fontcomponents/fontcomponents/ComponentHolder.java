@@ -34,8 +34,12 @@ public class ComponentHolder {
             return "";
         }
         for (FontComponent component : components) {
+            String value = component.generate(player,width);
+            if (value == null || value.isEmpty()) {
+                continue;
+            }
             stringBuilder.append(",");
-            stringBuilder.append(component.generate(player,width));
+            stringBuilder.append(value);
         }
         stringBuilder.append("]");
         return stringBuilder.toString();
