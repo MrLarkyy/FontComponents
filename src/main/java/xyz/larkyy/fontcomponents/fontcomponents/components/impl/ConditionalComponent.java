@@ -29,13 +29,15 @@ public class ConditionalComponent extends FontComponent {
     }
 
     public String generate(Player player, HolderWidth width) {
+        String string = "";
         if (predicate.test(player)) {
-            if (centered) {
-                FontComponents.getInstance().getComponentRepository()
-                        .generateOffset((width.getWidth()+this.width)/2,width);
-            }
             width.add(this.width);
-            return Utils.toJson(text,font);
+            if (centered) {
+                string += FontComponents.getInstance().getComponentRepository()
+                        .generateOffset(width.getWidth()/2,width);
+                string += ",";
+            }
+            return string+Utils.toJson(text,font);
         }
         return "";
     }

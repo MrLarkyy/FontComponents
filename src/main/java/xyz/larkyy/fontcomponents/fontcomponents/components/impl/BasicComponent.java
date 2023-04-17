@@ -1,5 +1,6 @@
 package xyz.larkyy.fontcomponents.fontcomponents.components.impl;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import xyz.larkyy.fontcomponents.fontcomponents.FontComponents;
 import xyz.larkyy.fontcomponents.fontcomponents.Utils;
@@ -30,12 +31,15 @@ public class BasicComponent extends FontComponent {
 
     @Override
     public String generate(Player player, HolderWidth width) {
-        if (centered) {
-            FontComponents.getInstance().getComponentRepository()
-                    .generateOffset((width.getWidth()+this.width)/2,width);
-        }
+        String string = "";
         width.add(this.width);
-        return Utils.toJson(text,font);
+        if (centered) {
+            Bukkit.broadcastMessage("Generating offset of "+(width.getWidth()/2));
+            string += FontComponents.getInstance().getComponentRepository()
+                    .generateOffset(width.getWidth()/2,width);
+            string+=",";
+        }
+        return string+Utils.toJson(text,font);
     }
 
     public static class Builder {

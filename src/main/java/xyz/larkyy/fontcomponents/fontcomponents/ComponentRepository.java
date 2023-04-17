@@ -1,5 +1,6 @@
 package xyz.larkyy.fontcomponents.fontcomponents;
 
+import org.bukkit.Bukkit;
 import xyz.larkyy.fontcomponents.fontcomponents.components.FontComponent;
 import xyz.larkyy.fontcomponents.fontcomponents.components.HolderWidth;
 import xyz.larkyy.fontcomponents.fontcomponents.components.impl.OffsetComponent;
@@ -33,11 +34,22 @@ public class ComponentRepository {
         if (offsetComponents.isEmpty()) {
             return "";
         }
+        OffsetComponent offsetComponent = getOffset(offset);
+        if (offsetComponent !=null) {
+            return offsetComponent.generate(null,width);
+        }
         int alreadyGenerated = 0;
         StringBuilder stringBuilder = new StringBuilder();
         while(alreadyGenerated < offset) {
             stringBuilder.append(",");
-            OffsetComponent nearestOffset = getNearestOffset(offset);
+            OffsetComponent nearestOffset;
+
+            offsetComponent = getOffset(offset-alreadyGenerated);
+            if (offsetComponent !=null) {
+                nearestOffset = offsetComponent;
+            } else {
+                nearestOffset = getNearestOffset(offset-alreadyGenerated);
+            }
             alreadyGenerated += nearestOffset.getOffset();
             stringBuilder.append(nearestOffset.generate(null,width));
         }
@@ -45,10 +57,11 @@ public class ComponentRepository {
     }
 
     private OffsetComponent getNearestOffset(int offset) {
-        Integer key = offsetComponents.higherKey(offset);
+        Integer key = offsetComponents.lowerKey(offset);
         if (key == null) {
-            key = offsetComponents.lastKey();
+            key = offsetComponents.firstKey();
         }
+        Bukkit.broadcastMessage("Nearest to "+offset+" is "+getOffset(key).getOffset());
         return getOffset(key);
     }
 
