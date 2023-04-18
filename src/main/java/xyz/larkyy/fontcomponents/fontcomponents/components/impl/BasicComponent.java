@@ -34,7 +34,6 @@ public class BasicComponent extends FontComponent {
         String string = "";
         width.add(this.width);
         if (centered) {
-            Bukkit.broadcastMessage("Generating offset of "+(width.getWidth()/2));
             string += FontComponents.getInstance().getComponentRepository()
                     .generateOffset(-(width.getWidth()/2),width);
             string+=",";
