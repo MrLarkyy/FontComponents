@@ -12,13 +12,15 @@ public class ConditionalComponent extends FontComponent {
 
     private final String text;
     private final String font;
+    private final String color;
     private final int width;
     private boolean centered;
     private final Predicate<Player> predicate;
 
-    public ConditionalComponent(String text, String font, int width, Predicate<Player> predicate, boolean centered) {
+    public ConditionalComponent(String text, String font, String color, int width, Predicate<Player> predicate, boolean centered) {
         this.text = text;
         this.font = font;
+        this.color = color;
         this.width = width;
         this.predicate = predicate;
         this.centered = centered;
@@ -37,7 +39,7 @@ public class ConditionalComponent extends FontComponent {
                         .generateOffset(-(width.getWidth()/2),width);
                 string += ",";
             }
-            return string+Utils.toJson(text,font);
+            return string+Utils.toJson(text,font,color);
         }
         return "";
     }
@@ -49,6 +51,7 @@ public class ConditionalComponent extends FontComponent {
 
         private String text;
         private String font;
+        private String color;
         private int width;
         private boolean centered = false;
         private Predicate<Player> predicate;
@@ -73,12 +76,18 @@ public class ConditionalComponent extends FontComponent {
             this.font = font;
             return this;
         }
+
+        public Builder setColor(String color) {
+            this.color = color;
+            return this;
+        }
+
         public Builder setText(String text) {
             this.text = text;
             return this;
         }
         public ConditionalComponent build() {
-            return new ConditionalComponent(text,font,width,predicate,centered);
+            return new ConditionalComponent(text,font,color,width,predicate,centered);
         }
     }
 }

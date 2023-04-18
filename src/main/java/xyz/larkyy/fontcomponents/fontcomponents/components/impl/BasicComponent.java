@@ -11,11 +11,13 @@ public class BasicComponent extends FontComponent {
 
     private final String text;
     private final String font;
+    private final String color;
     private boolean centered;
     private final int width;
 
-    public BasicComponent(String text, String font, int width, boolean centered) {
+    public BasicComponent(String text, String font, String color, int width, boolean centered) {
         this.text = text;
+        this.color = color;
         this.font = font;
         this.width = width;
         this.centered = centered;
@@ -38,13 +40,14 @@ public class BasicComponent extends FontComponent {
                     .generateOffset(-(width.getWidth()/2),width);
             string+=",";
         }
-        return string+Utils.toJson(text,font);
+        return string+Utils.toJson(text,font,color);
     }
 
     public static class Builder {
 
         private String text;
         private String font;
+        private String color;
         private int width;
         private boolean centered = false;
 
@@ -53,6 +56,11 @@ public class BasicComponent extends FontComponent {
 
         public Builder setCentered(boolean centered) {
             this.centered = centered;
+            return this;
+        }
+
+        public Builder setColor(String color) {
+            this.color = color;
             return this;
         }
 
@@ -69,7 +77,7 @@ public class BasicComponent extends FontComponent {
             return this;
         }
         public BasicComponent build() {
-            return new BasicComponent(text,font,width,centered);
+            return new BasicComponent(text,font,color,width,centered);
         }
     }
 }
