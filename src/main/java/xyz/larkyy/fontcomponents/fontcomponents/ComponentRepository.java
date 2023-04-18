@@ -48,7 +48,9 @@ public class ComponentRepository {
         int alreadyGenerated = 0;
         StringBuilder stringBuilder = new StringBuilder();
         while(alreadyGenerated > offset) {
-            stringBuilder.append(",");
+            if (alreadyGenerated != 0) {
+                stringBuilder.append(",");
+            }
             OffsetComponent nearestOffset;
 
             offsetComponent = getOffset(offset-alreadyGenerated);
@@ -77,7 +79,9 @@ public class ComponentRepository {
         int alreadyGenerated = 0;
         StringBuilder stringBuilder = new StringBuilder();
         while(alreadyGenerated < offset) {
-            stringBuilder.append(",");
+            if (alreadyGenerated != 0) {
+                stringBuilder.append(",");
+            }
             OffsetComponent nearestOffset;
 
             offsetComponent = getOffset(offset-alreadyGenerated);
